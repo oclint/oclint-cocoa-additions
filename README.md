@@ -1,11 +1,11 @@
 oclint-cocoa-additions
 ======================
 
-This repository contains a number of conveniences for using [OCLint](http://oclint.org) alongside Cocoa and Cocoa Touch.
+This repository contains a number of conveniences for using OCLint[http://oclint.org] alongside Cocoa and Cocoa Touch.
 
-Several of the checks included with OCLint allow you to annotate your code to achieve additional safety customized to your code base. Essentially, this allows you to add static features to Objective-C, like protected methods and abstract methods that must be overriden by subclasses.
+Several of the checks included with OCLint allow you to annotate your code to achieve additional safety customized to your code base. Essentially, this mechanism allows oclint to add powerful static features to Objective-C, like protected methods and abstract methods that must be overriden by subclasses.
 
-This repo contains some conveniences for utilizing these rules as well as annotations for some of the system frameworks that take advantage of these checks to formalize previously informal documentation.
+This repo contains some conveniences for utilizing these checks as well as annotations for some of the system frameworks that take advantage of these checks to formalize previously informal documentation.
 
 # Usage #
 
@@ -54,11 +54,11 @@ If you do this and have a subclass that overrides ``someMethod`` but does not ca
 
 # Rules
 
-* OCLINT_MUST_CALL_SUPER, as previously discussed, allows you to mark a method as requiring a call to its super implementation. Some system framework methods are marked this way, even if the system superclass version is marked explicitly as not doing anything. This is to catch common cases, where subclasses deeper down the hierarchy fail to call super. For example, it is a common mistake for subclasses of subclasses of UIViewController to fail to call the super implementation of ``viewWillAppear:`` even though the implementation in UIViewController is documented to do nothing.
+* OCLINT_MUST_CALL_SUPER, as previously discussed, allows you to mark a method as requiring a call to its super implementation. Some system framework methods are marked this way, even if the system superclass version is marked explicitly as not doing anything. This is to catch common cases, where subclasses farther down the hierarchy fail to call super. For example, it is a common mistake when dealing with deeper class hierarchies, for subclasses of subclasses of UIViewController to fail to call the super implementation of ``viewWillAppear:`` even though the implementation in UIViewController is documented to do nothing and so immediate subclasses don't really need to call super.
 
-* OCLINT_PROTECTED_METHOD allows you to mark a method as protected. This is a concept from other OO languages (and also shows up as the little used ``@protected`` annotation on ivars) for a method that can only be called by the class itself and subclasses of that class.
+* OCLINT_PROTECTED_METHOD allows you to mark a method as protected. This is a concept from other OO languages (and also shows up as the little used ``@protected`` annotation on ivars). A protected method is a method that can only be called by the class itself and subclasses of that class.
 
-* OCLINT_SUBCLASS_MUST_OVERRIDE allows you to mark a method that any subclass of the marked declaration's class must implement. This is useful for implementing abstract classes.
+* OCLINT_SUBCLASS_MUST_OVERRIDE allows you to mark a method that any subclass of the marked declaration's class must override. This is useful for implementing abstract classes.
 
 
-Direct any questions to the oclint google group[TODO add group here] or create an issue on github.
+Direct any questions to the [oclint google group](https://groups.google.com/forum/#!forum/oclint-users) or create an issue on github.
