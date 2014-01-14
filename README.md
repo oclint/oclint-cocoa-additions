@@ -19,7 +19,7 @@ There are three steps to adding these checks to your project so oclint can see t
 
 ## Adding to your code ##
 
-All of these checks work as annotations on method or property declarations. Furthmore, you can add annotations to already declared methods by redeclaring them in a category with the additional annotation. This is how the annotations included for system frameworks work.
+All of these checks work as annotations on method, property, or C function declarations. Furthmore, you can add annotations to already declared methods or properties by redeclaring them in a category with the additional annotation. For C functions, just repeat the declarationw along with the additional attributes. This is how the annotations included for system frameworks work.
 
 These are also documented in ``OCLint-Annotations.h`` and you can look at the framework specific headers for examples.
 
@@ -54,11 +54,13 @@ If you do this and have a subclass that overrides ``someMethod`` but does not ca
 
 # Rules
 
-* OCLINT_MUST_CALL_SUPER, as previously discussed, allows you to mark a method as requiring a call to its super implementation. Some system framework methods are marked this way, even if the system superclass version is marked explicitly as not doing anything. This is to catch common cases, where subclasses farther down the hierarchy fail to call super. For example, it is a common mistake when dealing with deeper class hierarchies, for subclasses of subclasses of UIViewController to fail to call the super implementation of ``viewWillAppear:`` even though the implementation in UIViewController is documented to do nothing and so immediate subclasses don't really need to call super.
+* ``OCLINT_MUST_CALL_SUPER``, as previously discussed, allows you to mark a method as requiring a call to its super implementation. Some system framework methods are marked this way, even if the system superclass version is marked explicitly as not doing anything. This is to catch common cases, where subclasses farther down the hierarchy fail to call super. For example, it is a common mistake when dealing with deeper class hierarchies, for subclasses of subclasses of UIViewController to fail to call the super implementation of ``viewWillAppear:`` even though the implementation in UIViewController is documented to do nothing and so immediate subclasses don't really need to call super. This is similar to the built-in ``objc_requires_super`` attribute, but as usual, can be applied to already declared methods.
 
-* OCLINT_PROTECTED_METHOD allows you to mark a method as protected. This is a concept from other OO languages (and also shows up as the little used ``@protected`` annotation on ivars). A protected method is a method that can only be called by the class itself and subclasses of that class.
+* ``OCLINT_PROTECTED_METHOD`` allows you to mark a method as protected. This is a concept from other OO languages (and also shows up as the little used ``@protected`` annotation on ivars). A protected method is a method that can only be called by the class itself and subclasses of that class.
 
-* OCLINT_SUBCLASS_MUST_OVERRIDE allows you to mark a method that any subclass of the marked declaration's class must override. This is useful for implementing abstract classes.
+* ``OCLINT_SUBCLASS_MUST_OVERRIDE`` allows you to mark a method that any subclass of the marked declaration's class must override. This is useful for implementing abstract classes.
+
+* ``OCLINT_PROHIBIT_CALL()`` allows you to mark a method or C function as prohibited. This is similar to the deprecated attribute used by the system frameworks, but you can use categories or redeclarations to mark system frameworks as prohibited within a library. The argument is a comment indicating what callers should use instead and it will show up in oclint's output.
 
 
 Direct any questions to the [oclint google group](https://groups.google.com/forum/#!forum/oclint-users) or create an issue on github.
